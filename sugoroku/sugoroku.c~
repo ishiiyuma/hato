@@ -1,0 +1,56 @@
+/*追加プログラム*/
+/*typedef struct ivent_none_param{
+}IVENT_NONE_PARAM;*/
+
+/*typedef struct ivent_goal_param{
+}IVENT_GOAL_PARAM;*/
+
+/*typedef struct ivent_trap_param{
+}IVENT_TRAP_PARAM;*/
+
+typedef struct ivent_step_param{
+	int step;
+}IVENT_STEP_PARAM;
+
+typedef struct ivent_warp_param{
+	MAS *to;
+}IVENT_WARP_PARAM;
+
+typedef struct ivent_branch_param{
+	MAS *next_1;
+	MAS *next_2;
+}IVENT_BRANCH_PARAM;
+
+void run_ivent(PLAYER *player,MAS *mas){
+	switch(mas->ivent_id){
+		case NONE:
+		break;
+		
+		case GOAL:
+			if(player->step == 0){
+				/*ゴール処理*/
+			}else{
+				/*戻る処理*/
+			}
+		break;
+		
+		case TRAP:
+			if(player->step == 0){
+				/*1回休み処理*/
+			}
+		break;
+		
+		case STEP:
+			if(player->step == 0){
+				/*n進む/戻る処理*/
+			}
+		break;
+		
+		case WARP:
+		break;
+		
+		case BRANCH:
+		break;
+	}
+}
+

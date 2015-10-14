@@ -1,0 +1,89 @@
+/*追加プログラム*/
+/*typedef struct ivent_none_param{
+}IVENT_NONE_PARAM;*/
+
+/*typedef struct ivent_goal_param{
+}IVENT_GOAL_PARAM;*/
+
+/*typedef struct ivent_trap_param{
+}IVENT_TRAP_PARAM;*/
+
+typedef struct ivent_step_param{
+	int step;
+}IVENT_STEP_PARAM;
+
+typedef struct ivent_warp_param{
+	MAS *to;
+}IVENT_WARP_PARAM;
+
+void GAME_run_ivent(GAME *game,PLAYER *player,MAS *mas){
+	switch(mas->ivent_id){
+		case NONE:
+		break;
+		
+		case GOAL:
+			if(player->step == 0){
+				/*ゴール処理*/
+				player->goal_flag = TRUE;
+				player->rank = game->rank;
+				game->rank++;
+			}else{
+				/*戻る処理*/
+				player->step *= -1;
+			}
+		break;
+		
+		case TRAP:
+			if(player->step == 0){
+				/*1回休み処理*/
+				player->trap_flag = TRUE;
+			}
+		break;
+		
+		case STEP:
+			if(player->step == 0){
+				/*n進む/戻る処理*/
+				player->step = (IVENT_STEP_PARAM *)(mas->ivent_param)->step;
+			}
+		break;
+		
+		case WARP:
+			if(player->step == 0){
+				/*ワープ処理*/
+			}
+		break;
+		
+	}
+}
+
+make_mases(){
+	/*差分*/
+	/*while文のMAS_make()直後*/
+	int rand_num;
+	rand_num = rand()%10;
+	if (rand_num < 5){
+		/*50%*/
+		mas->ivent_id = NONE;
+		mas->ivent_param = NULL;
+	}else if (rand_num < 7){
+		/*20%*/
+		mas->ivent_id = TRAP;
+		mas->ivent_param = NULL;
+	}else if (rand_num < 9){
+		/*20%*/
+		mas->ivent_id = STEP;
+		mas->ivent_param = (IVENT_STEP_PARAM *)malloc(sizeof(IVENT_STEP_PARAM));
+		(IVENT_STEP_PARAM *)(mas->ivent_param)->step = rand()%13-6;
+	}else{
+		/*10%*/
+		mas->ivent_id = WARP;
+		mas->ivent_param = (IVENT_WARP_PARAM *)malloc(sizeof(IVENT_WARP_PARAM));
+		(IVENT_WARP_PARAM *)(mas->ivent_param)->to = NULL;/*あとで決定*/
+	}
+
+	/*while文のあと*/
+	mas->next = MAS_make();
+	mas = mas->next;
+	mas->ivent_id = GOAL;
+	mas->ivent_rapam = NULL;
+}

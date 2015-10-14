@@ -1,0 +1,9 @@
+#define ITEM_NONE 0//なし
+#define ITEM_ENEMYREST 1//相手1回休み
+#define ITEM_DICE 2//サイコロ+1
+
+struct item{
+	int item_id;
+};
+
+
